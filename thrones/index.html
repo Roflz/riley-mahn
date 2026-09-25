@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#07080f">
+  <title>Of Thrones — Battle Prototype</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/splash.css">
+  <link rel="stylesheet" href="css/world-map.css">
+  <link rel="stylesheet" href="css/phase4.css">
+  <link rel="stylesheet" href="css/phase5.css">
+  <link rel="stylesheet" href="css/phase6.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCREEN — SPLASH / LOADING (shown first on app load)
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="screen-splash" class="screen screen-splash active" role="dialog" aria-label="Loading Of Thrones" aria-busy="true">
+    <div class="splash-media" aria-hidden="true">
+      <img
+        class="splash-image"
+        src="assets/splash-screen.png"
+        alt=""
+        width="1024"
+        height="553"
+        decoding="async"
+        fetchpriority="high"
+      >
+      <div class="splash-vignette"></div>
+    </div>
+    <div class="splash-progress-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Loading progress">
+      <div class="splash-progress-track">
+        <div id="splash-progress-fill" class="splash-progress-fill"></div>
+      </div>
+      <span class="splash-progress-label">Loading…</span>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCREEN — STARTER CHARACTER SELECT (Phase 5)
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="screen-starter-select" class="screen screen-starter-select">
+    <div class="starter-shell">
+
+      <!-- Step 1 — Pick starter -->
+      <div id="starter-step-pick" class="starter-step starter-step-active">
+        <div class="starter-header">
+          <h2 class="starter-title">Choose Your Hero</h2>
+          <p class="starter-subtitle">Your starting champion shapes early gear, resources, and play style. You begin with one hero on your team.</p>
+        </div>
+        <div id="starter-grid" class="starter-grid"></div>
+      </div>
+
+      <!-- Step 2 — Allocate 5 stat points -->
+      <div id="starter-step-allocate" class="starter-step">
+        <div class="starter-header">
+          <button type="button" id="starter-btn-back-pick" class="btn btn-ghost btn-sm starter-back-btn">← Back</button>
+          <h2 class="starter-title">Allocate Stat Points</h2>
+          <p id="starter-alloc-subtitle" class="starter-subtitle">Distribute 5 free points to customize your hero.</p>
+        </div>
+        <div id="starter-alloc-hero" class="starter-alloc-hero"></div>
+        <div id="starter-stat-rows" class="starter-stat-rows"></div>
+        <div class="starter-points-bar">
+          <span id="starter-points-left" class="starter-points-count">5</span>
+          <span class="starter-points-label">points remaining</span>
+        </div>
+        <button type="button" id="starter-btn-to-review" class="btn btn-primary starter-step-cta" disabled>Review Hero →</button>
+      </div>
+
+      <!-- Step 3 — Review & confirm -->
+      <div id="starter-step-review" class="starter-step">
+        <div class="starter-header">
+          <button type="button" id="starter-btn-back-alloc" class="btn btn-ghost btn-sm starter-back-btn">← Adjust Stats</button>
+          <h2 class="starter-title">Confirm Your Hero</h2>
+          <p class="starter-subtitle">Review your build before entering the realm.</p>
+        </div>
+        <div id="starter-review-body" class="starter-review-body"></div>
+        <button type="button" id="starter-btn-confirm" class="btn btn-menu-primary starter-step-cta">⚔️ Enter the Realm</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCREEN 0 — MAIN MENU
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="screen-main-menu" class="screen screen-main-menu">
+    <div class="menu-bg-glow"></div>
+    <div class="menu-content">
+      <div class="menu-logo">
+        <div class="menu-crown">♛</div>
+        <h1 class="menu-title">Of Thrones</h1>
+        <p class="menu-tagline">A turn-based realm awaits</p>
+      </div>
+      <div class="menu-buttons">
+        <button id="btn-menu-play"  type="button" class="btn btn-menu-primary" onclick="window.enterMap && window.enterMap()">⚔️ Begin Adventure</button>
+        <button id="btn-menu-reset" type="button" class="btn btn-menu-secondary hidden">🗑️ Reset Save</button>
+      </div>
+      <div class="menu-version">Phase 9 · World Map</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCREEN 1 — WORLD MAP
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="screen-map" class="screen">
+
+    <!-- Compact header -->
+    <div class="map-header">
+      <div class="map-title-block">
+        <span class="map-game-title">Of Thrones</span>
+        <span class="map-game-sub">World Map</span>
+      </div>
+      <div id="map-team-strip" class="map-team-strip">
+        <!-- Populated by map.js -->
+      </div>
+      <div class="map-header-right">
+        <div class="map-gold-pill" aria-label="Gold">
+          <span id="map-gold-display" class="map-gold-amount">◈ 0</span>
+        </div>
+        <button id="btn-skilltree-open" class="btn-map-icon" aria-label="Skill Tree" title="Skill Tree">🌳</button>
+        <button id="btn-workshop-open" class="btn-map-icon" aria-label="Workshop" title="Crafting Workshop">🔨</button>
+        <button id="btn-territories-open" class="btn-map-icon" aria-label="Territories" title="World Territories">🗺️</button>
+        <button id="btn-char-status-open" class="btn-map-icon" aria-label="Hero Status" title="Hero Status">📋</button>
+        <button id="btn-gather-open"  class="btn-map-icon" aria-label="Gather"      title="Gather Resources">🌿</button>
+        <button id="btn-prayer-open"  class="btn-map-icon" aria-label="Prayer"      title="Select Prayer">🙏<span id="prayer-badge" class="prayer-badge" style="display:none"></span></button>
+        <button id="btn-milestone-open" class="btn-map-icon" aria-label="Milestones" title="Milestones">📜<span id="milestone-badge" class="prayer-badge" style="display:none"></span></button>
+        <button id="btn-shop-open"    class="btn-map-icon" aria-label="Shop"        title="Gold Shop">🛒</button>
+        <button id="btn-team-open"    class="btn-map-icon" aria-label="Manage Team" title="Manage Team">⚔️</button>
+        <button id="btn-open-account" class="btn-map-icon" aria-label="Account"     title="Account">👤</button>
+        <button id="btn-settings-open"class="btn-map-icon" aria-label="Settings"    title="Settings">⚙️</button>
+        <button id="btn-map-to-menu"  class="btn-map-icon" aria-label="Main Menu"   title="Main Menu">🏠</button>
+      </div>
+    </div>
+
+    <!-- Three.js isometric world map — rendered by WorldEngine -->
+    <div class="map-viewport" id="map-viewport">
+      <!-- #world-map-canvas injected by WorldEngine at init -->
+    </div><!-- /map-viewport -->
+    <div id="map-rotate-hint" class="map-rotate-hint" aria-hidden="true">
+      <span>Rotate device for the best map view</span>
+    </div>
+
+    <!-- Semi-transparent backdrop (click to close panel) -->
+    <div id="map-backdrop" class="map-backdrop hidden"></div>
+
+    <!-- Map context panel — battles, resources, build sites, territories -->
+    <div id="battle-panel" class="battle-panel map-context-panel panel-hidden">
+      <div class="panel-handle-bar"></div>
+      <button id="btn-panel-close" class="btn-panel-close" aria-label="Close">✕</button>
+      <div id="battle-panel-content" class="battle-panel-content">
+        <!-- Populated by map.js -->
+      </div>
+      <div id="map-panel-actions" class="map-panel-actions">
+        <button id="btn-map-panel-action" type="button" class="btn btn-primary map-panel-action-btn" style="display:none"></button>
+        <button id="btn-fight" type="button" class="btn btn-fight">⚔️ Enter Battle</button>
+      </div>
+    </div>
+
+  </div><!-- /screen-map -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCREEN — WORLD TERRITORIES (Phase 4)
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="screen-territories" class="screen screen-territories">
+    <div class="territories-header">
+      <button id="btn-territories-back" type="button" class="btn btn-ghost btn-sm">← Campaign Map</button>
+      <span class="territories-title">🗺️ World Territories</span>
+    </div>
+    <p class="territories-sub">Assign idle heroes to gather resources. Territories unlock as you clear campaign battles.</p>
+    <div id="territory-list" class="territory-list"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCREEN 1b — BATTLE SELECT (legacy list, kept for reference)
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="screen-select" class="screen">
+    <div class="select-content">
+      <header class="game-header">
+        <h1 class="game-title">Of Thrones</h1>
+        <p class="game-subtitle">Phase 1 — Battle Prototype</p>
+      </header>
+      <section class="section">
+        <h2 class="section-label">Your Team</h2>
+        <div id="team-preview-row" class="team-preview-row"></div>
+      </section>
+      <section class="section">
+        <h2 class="section-label">Select Battle</h2>
+        <div id="battle-list-items"></div>
+      </section>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCREEN 2 — BATTLE
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="screen-battle" class="screen">
+
+    <!-- Header bar -->
+    <div class="battle-header">
+      <button id="btn-retreat" class="btn btn-ghost btn-sm">← Retreat</button>
+      <span id="battle-name-label" class="battle-name-label">Battle</span>
+      <span id="round-label" class="round-label">Round 1</span>
+    </div>
+
+    <!-- Enemy team -->
+    <div id="enemy-arena" class="arena enemy-arena">
+      <!-- Unit cards injected by ui.js -->
+    </div>
+
+    <!-- Battle log -->
+    <div class="battle-log">
+      <div id="battle-log-inner" class="battle-log-inner">
+        <!-- Log entries appended by ui.js -->
+      </div>
+    </div>
+
+    <!-- Player team -->
+    <div id="player-arena" class="arena player-arena">
+      <!-- Unit cards injected by ui.js -->
+    </div>
+
+    <!-- Action panel -->
+    <div class="action-panel">
+      <div id="action-info" class="action-info">—</div>
+      <div id="ability-bar" class="ability-bar"></div>
+      <div class="action-buttons">
+        <button id="btn-attack" class="btn btn-attack" disabled>⚔️ Attack</button>
+        <button id="btn-skill"  class="btn btn-skill"  disabled style="display:none">✨ Skill</button>
+        <button id="btn-food"   class="btn btn-food"   disabled>🍖 Eat Food</button>
+        <button id="btn-auto"   class="btn btn-auto">🤖 Auto: OFF</button>
+      </div>
+    </div>
+
+    <!-- Tutorial hint bar (first-battle only) -->
+    <div id="tutorial-hint" class="tutorial-hint"></div>
+
+    <!-- Targeting mode bar (floats above units) -->
+    <div id="targeting-bar" class="targeting-bar hidden">
+      <span id="targeting-bar-label">Select a target</span>
+      <button id="btn-cancel-target" class="btn-cancel-text">✕ Cancel</button>
+    </div>
+
+    <!-- Result overlay (victory / defeat) -->
+    <div id="result-overlay" class="result-overlay hidden">
+      <div class="result-box">
+        <div id="result-icon"  class="result-icon">🏆</div>
+        <h2  id="result-title" class="result-title title-victory">Victory!</h2>
+        <p   id="result-msg"   class="result-msg"></p>
+        <!-- XP summary injected by main.js on victory -->
+        <div id="result-xp-summary" class="result-xp-summary"></div>
+        <button id="btn-result-continue" class="btn btn-primary">Return to Map</button>
+      </div>
+    </div>
+
+  </div><!-- /screen-battle -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCREEN 3 — GATHERING & COOKING
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="screen-gather" class="screen screen-gather">
+
+    <!-- Header -->
+    <div class="gather-header">
+      <button id="btn-gather-back" class="btn btn-ghost btn-sm">← Back</button>
+      <span class="gather-title">🌿 Gathering &amp; Cooking</span>
+    </div>
+
+    <!-- Tab bar -->
+    <div class="gather-tabs">
+      <button class="gather-tab active" data-tab="gather"       onclick="GATHER._switchTab('gather')">⛏ Gather</button>
+      <button class="gather-tab"        data-tab="cooking"      onclick="GATHER._switchTab('cooking')">🍖 Cook</button>
+      <button class="gather-tab"        data-tab="smithing"     onclick="GATHER._switchTab('smithing')">🔨 Smith</button>
+      <button class="gather-tab"        data-tab="construction" onclick="GATHER._switchTab('construction')">🏗️ Build</button>
+    </div>
+
+    <!-- GATHER PANEL -->
+    <div id="gather-panel-gather" class="gather-panel gather-panel-active">
+
+      <!-- Gathering nodes -->
+      <div id="gather-nodes" class="gather-nodes"></div>
+
+      <!-- Resource inventory -->
+      <div class="gather-section-header">📦 Resources</div>
+      <div id="gather-inventory" class="gather-inventory"></div>
+
+      <!-- Skill XP bars -->
+      <div class="gather-section-header">📊 Gathering Skills</div>
+      <div id="gather-skill-bars" class="gather-skill-bars"></div>
+
+      <!-- Activity log -->
+      <div class="gather-section-header">📜 Activity Log</div>
+      <div id="gather-log" class="gather-log"></div>
+    </div>
+
+    <!-- COOKING PANEL -->
+    <div id="gather-panel-cooking" class="gather-panel">
+
+      <!-- Recipes -->
+      <div class="gather-section-header">📋 Recipes</div>
+      <div id="cooking-recipes" class="cooking-recipes"></div>
+
+      <!-- Feedback toast -->
+      <div id="cooking-feedback" class="cooking-feedback"></div>
+
+      <!-- Food inventory -->
+      <div class="gather-section-header">🎒 Food Inventory</div>
+      <div id="cooking-food-inventory" class="cooking-food-inventory"></div>
+
+      <!-- Cooking skill bars -->
+      <div class="gather-section-header">📊 Cooking Skill</div>
+      <div id="cooking-skill-bars" class="gather-skill-bars"></div>
+
+    </div>
+
+    <!-- SMITHING PANEL -->
+    <div id="gather-panel-smithing" class="gather-panel">
+
+      <!-- Forge recipes -->
+      <div class="gather-section-header">⚒️ Forge Recipes</div>
+      <div id="smithing-recipes" class="cooking-recipes"></div>
+
+      <!-- Feedback toast -->
+      <div id="smithing-feedback" class="cooking-feedback"></div>
+
+      <!-- Crafted items inventory -->
+      <div class="gather-section-header">🎒 Crafted Items</div>
+      <div id="smithing-inventory" class="gather-inventory"></div>
+
+      <!-- Smithing skill bars -->
+      <div class="gather-section-header">📊 Smithing Skill</div>
+      <div id="smithing-skill-bars" class="gather-skill-bars"></div>
+
+    </div>
+
+    <!-- CONSTRUCTION PANEL -->
+    <div id="gather-panel-construction" class="gather-panel">
+
+      <!-- Buildings list -->
+      <div class="gather-section-header">🏗️ Build Structures</div>
+      <div id="construction-buildings" class="construction-buildings"></div>
+
+      <!-- Feedback toast -->
+      <div id="construction-feedback" class="cooking-feedback"></div>
+
+      <!-- Built structures -->
+      <div class="gather-section-header">🏰 Built Structures</div>
+      <div id="construction-built-list" class="gather-inventory"></div>
+
+      <!-- Construction skill bars -->
+      <div class="gather-section-header">📊 Construction Skill</div>
+      <div id="construction-skill-bars" class="gather-skill-bars"></div>
+
+    </div>
+
+  </div><!-- /screen-gather -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SKILL TREE OVERLAY
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="overlay-skilltree" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="Skill Tree">
+    <div class="overlay-sheet overlay-sheet-tree">
+      <div class="overlay-header">
+        <span id="st-tree-name" class="overlay-title">🌳 Skill Tree</span>
+        <button id="btn-skilltree-close" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+
+      <!-- Hero selector tabs -->
+      <div id="st-hero-tabs" class="st-hero-tabs"></div>
+
+      <!-- Points display -->
+      <div id="st-points-display" class="st-points-display">✨ 0 Points</div>
+
+      <!-- Feedback message -->
+      <div id="st-feedback" class="cooking-feedback"></div>
+
+      <div id="st-branch-headers" class="st-branch-headers"></div>
+      <div id="st-tree-body" class="st-tree-body st-tree-unified"></div>
+
+      <div class="st-legend">
+        <span class="st-legend-item st-legend-owned">✓ Unlocked</span>
+        <span class="st-legend-item st-legend-available">● Available</span>
+        <span class="st-legend-item st-legend-locked">○ Locked</span>
+        <span class="st-legend-note">1 skill point per level · Max Lv.100 · Hybrid bridges connect regions</span>
+      </div>
+      <div class="st-respec-row">
+        <button id="btn-skilltree-respec" class="btn btn-respec">
+          ↩ Respec (◈ 500 Gold)
+        </button>
+        <span class="st-respec-note">Refunds all invested points for this hero.</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MILESTONES OVERLAY
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="overlay-milestones" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="Milestones">
+    <div class="overlay-sheet">
+      <div class="overlay-header">
+        <span class="overlay-title">📜 Milestones</span>
+        <button id="btn-milestone-close" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+      <div class="overlay-subtext">Complete quests and milestones to earn Gold and Skill Points.</div>
+      <div id="milestone-list" class="milestone-list"></div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SHOP OVERLAY
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="overlay-shop" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="Shop">
+    <div class="overlay-sheet">
+      <div class="overlay-header">
+        <span class="overlay-title">🛒 Gold Shop</span>
+        <button id="btn-shop-close" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+      <div class="shop-gold-bar">
+        <span id="shop-gold" class="shop-gold-display">◈ 0 Gold</span>
+        <span class="shop-gold-sub">Spend your hard-earned gold</span>
+      </div>
+      <div class="overlay-subtext">Buy food &amp; gear directly with gold.</div>
+      <div id="shop-feedback" class="cooking-feedback"></div>
+      <div id="shop-items" class="shop-items-list"></div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PRAYER OVERLAY
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="overlay-prayer" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="Prayer">
+    <div class="overlay-sheet">
+      <div class="overlay-header">
+        <span class="overlay-title">🙏 Select Prayer</span>
+        <button id="btn-prayer-close" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+      <div class="overlay-subtext">One prayer is active per battle. Tap again to deactivate.</div>
+      <div id="prayer-list" class="prayer-list"></div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ACCOUNT OVERLAY — Characters, Skills, Items
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="screen-account" class="acct-overlay acct-hidden" role="dialog" aria-modal="true" aria-label="Account">
+
+    <div class="acct-sheet">
+
+      <!-- Sheet handle -->
+      <div class="acct-handle"></div>
+
+      <!-- Profile header -->
+      <div class="acct-header">
+        <div class="acct-profile">
+          <div class="acct-avatar">👑</div>
+          <div class="acct-profile-text">
+            <div class="acct-player-name">Adventurer</div>
+            <div class="acct-player-meta">
+              <span class="acct-gold"><span class="gold-icon">◈</span> <span id="acct-gold-amount">0</span> Gold</span>
+              <span class="acct-sep">·</span>
+              <span class="acct-level">Total Lv <span id="acct-total-level">—</span></span>
+            </div>
+          </div>
+        </div>
+        <button id="btn-acct-close" class="btn-acct-close" aria-label="Close">✕</button>
+      </div>
+
+      <!-- Tab bar -->
+      <div class="acct-tabs" role="tablist">
+        <button class="acct-tab active" data-tab="characters" role="tab">⚔️ Heroes</button>
+        <button class="acct-tab"        data-tab="skills"     role="tab">✨ Skills</button>
+        <button class="acct-tab"        data-tab="items"      role="tab">🎒 Items</button>
+        <button class="acct-tab"        data-tab="resources"  role="tab">📦 Stock</button>
+      </div>
+
+      <!-- Tab panels -->
+      <div class="acct-body">
+        <div id="acct-tab-characters" class="acct-panel acct-panel-active" role="tabpanel">
+          <!-- Populated by account.js -->
+        </div>
+        <div id="acct-tab-skills" class="acct-panel" role="tabpanel">
+          <!-- Populated by account.js -->
+        </div>
+        <div id="acct-tab-items" class="acct-panel" role="tabpanel">
+          <!-- Populated by account.js -->
+        </div>
+        <div id="acct-tab-resources" class="acct-panel" role="tabpanel">
+          <!-- Populated by account.js -->
+        </div>
+      </div>
+
+    </div><!-- /acct-sheet -->
+  </div><!-- /screen-account -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TEAM MANAGEMENT OVERLAY
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="overlay-team" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="Manage Team">
+    <div class="overlay-sheet">
+      <div class="overlay-handle"></div>
+      <div class="overlay-header">
+        <span class="overlay-title">⚔️ Manage Team</span>
+        <button id="btn-team-close" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+      <div id="team-overlay-body" class="overlay-body">
+        <!-- Populated by team.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SETTINGS OVERLAY
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="overlay-settings" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="Settings">
+    <div class="overlay-sheet overlay-sheet-sm">
+      <div class="overlay-handle"></div>
+      <div class="overlay-header">
+        <span class="overlay-title">⚙️ Settings</span>
+        <button id="btn-settings-close" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+      <div class="overlay-body settings-body">
+        <div class="settings-section">
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Ambient Music</div>
+              <div class="settings-row-sub">Soft background ambience while playing.</div>
+            </div>
+            <label class="settings-toggle">
+              <input type="checkbox" id="settings-music-toggle" checked>
+              <span class="settings-toggle-slider"></span>
+            </label>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Reset Save</div>
+              <div class="settings-row-sub">Wipes all progress and starts fresh.</div>
+            </div>
+            <button id="btn-settings-reset" class="btn btn-danger btn-sm">Reset</button>
+          </div>
+        </div>
+        <div class="settings-footer">Of Thrones — Web Prototype · Phase 4</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PHASE 4 — Territory detail overlay
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="overlay-territory-detail" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="Territory Detail">
+    <div class="overlay-sheet overlay-sheet-tall">
+      <div class="overlay-header">
+        <span id="territory-detail-title" class="overlay-title">Territory</span>
+        <button id="btn-territory-detail-close" type="button" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+      <p id="territory-detail-sub" class="overlay-subtext"></p>
+      <div class="territory-detail-section">
+        <h3 class="territory-section-label">🏗️ Build Sites</h3>
+        <div id="territory-build-sites-list" class="territory-build-sites-list"></div>
+      </div>
+      <div class="territory-detail-section">
+        <h3 class="territory-section-label">🌿 Resource Nodes</h3>
+        <div id="territory-nodes-list" class="territory-nodes-list"></div>
+      </div>
+      <div class="territory-detail-section">
+        <h3 class="territory-section-label">🔨 Crafting Jobs</h3>
+        <div id="territory-crafting-list" class="territory-crafting-list"></div>
+      </div>
+      <div class="territory-detail-section">
+        <h3 class="territory-section-label">📋 Active Assignments</h3>
+        <div id="territory-assignments-list" class="territory-assignments-list"></div>
+      </div>
+      <div class="territory-detail-section">
+        <h3 class="territory-section-label">⚔️ Battles</h3>
+        <div id="territory-battles-list" class="territory-battles-list"></div>
+      </div>
+      <div id="territory-upgrade-section" class="territory-detail-section"></div>
+    </div>
+  </div>
+
+
+  <!-- Assignment picker overlay -->
+  <div id="overlay-assignment" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="Assign Hero">
+    <div class="overlay-sheet">
+      <div class="overlay-header">
+        <span id="assignment-picker-title" class="overlay-title">Assign Hero</span>
+        <button id="btn-assignment-close" type="button" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+      <div id="assignment-picker-list" class="assignment-picker-list"></div>
+    </div>
+  </div>
+
+
+  <!-- Character status overlay -->
+  <div id="overlay-char-status" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="Hero Status">
+    <div class="overlay-sheet">
+      <div class="overlay-header">
+        <span class="overlay-title">📋 Hero Status</span>
+        <button id="btn-char-status-close" type="button" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+      <p class="overlay-subtext">Active = battle team · Assigned = gathering · Crafting = workshop job · Idle = available</p>
+      <div id="char-status-list" class="char-status-list"></div>
+    </div>
+  </div>
+
+
+  <!-- Workshop overlay (Phase 5) -->
+  <div id="overlay-workshop" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="Crafting Workshop">
+    <div class="overlay-sheet overlay-sheet-tall">
+      <div class="overlay-header">
+        <span class="overlay-title">🔨 Crafting Workshop</span>
+        <button id="btn-workshop-close" type="button" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+      <p class="overlay-subtext">Assign idle heroes to timed smithing, cooking, and construction jobs.</p>
+      <div class="workshop-tabs">
+        <button type="button" class="workshop-tab active" data-tab="smithing">⚔️ Smithing</button>
+        <button type="button" class="workshop-tab" data-tab="cooking">🍖 Cooking</button>
+        <button type="button" class="workshop-tab" data-tab="construction">🏗️ Construction</button>
+      </div>
+      <div id="workshop-body" class="workshop-body"></div>
+    </div>
+  </div>
+
+
+  <!-- Crafting hero picker -->
+  <div id="overlay-craft-picker" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="Assign Crafter">
+    <div class="overlay-sheet">
+      <div class="overlay-header">
+        <span id="craft-picker-title" class="overlay-title">Assign Hero</span>
+        <button id="btn-craft-picker-close" type="button" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+      <div id="craft-picker-list" class="assignment-picker-list"></div>
+    </div>
+  </div>
+
+
+  <!-- Offline summary overlay -->
+  <div id="overlay-offline-summary" class="full-overlay hidden" role="dialog" aria-modal="true" aria-label="While You Were Away">
+    <div class="overlay-sheet">
+      <div class="overlay-header">
+        <span class="overlay-title">⏳ While You Were Away</span>
+        <button id="btn-offline-close" type="button" class="btn-overlay-close" aria-label="Close">✕</button>
+      </div>
+      <div id="offline-summary-body" class="offline-summary-body"></div>
+      <button id="btn-offline-continue" type="button" class="btn btn-primary" onclick="document.getElementById('btn-offline-close').click()">Continue</button>
+    </div>
+  </div>
+
+
+  <!-- Scripts — order: data → save → unlock → engine → sfx → ui → map → account → team → gather → cooking → controller -->
+  <script src="js/data.js"></script>
+  <script src="js/combat-defs.js"></script>
+  <script src="js/combat-build.js"></script>
+  <script src="js/save.js"></script>
+  <script src="js/unlock.js"></script>
+  <script src="js/battle.js"></script>
+  <script src="js/sfx.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="vendor/three.min.js"></script>
+  <script src="js/world-map-data.js"></script>
+  <script src="js/engine/iso-math.js"></script>
+  <script src="js/engine/world-tokens.js"></script>
+  <script src="js/engine/camera.js"></script>
+  <script src="js/engine/input-manager.js"></script>
+  <script src="js/engine/procedural-tiles.js"></script>
+  <script src="js/engine/terrain-shader.js"></script>
+  <script src="js/engine/three-terrain.js"></script>
+  <script src="js/engine/three-props.js"></script>
+  <script src="vendor/pixi.min.js"></script>
+  <script src="js/world-engine.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/account.js"></script>
+  <script src="js/team.js"></script>
+  <script src="js/gather.js"></script>
+  <script src="js/cooking.js"></script>
+  <script src="js/smithing.js"></script>
+  <script src="js/construction.js"></script>
+  <script src="js/prayer.js"></script>
+  <script src="js/shop.js"></script>
+  <script src="js/skilltree.js"></script>
+  <script src="js/milestones.js"></script>
+  <script src="js/assignment.js"></script>
+  <script src="js/crafting.js"></script>
+  <script src="js/workshop.js"></script>
+  <script src="js/starter.js"></script>
+  <script src="js/offline.js"></script>
+  <script src="js/territory.js"></script>
+  <script src="js/splash.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

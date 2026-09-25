@@ -1,0 +1,119 @@
+/* Phase 6 — Unified skill tree & battle abilities */
+
+.ability-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.35rem 0.5rem 0;
+  max-height: 4.5rem;
+  overflow-y: auto;
+}
+
+.btn-ability {
+  font-size: 0.68rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
+  background: rgba(100, 80, 180, 0.25);
+  border: 1px solid rgba(160, 140, 220, 0.35);
+  color: #d8d0f8;
+  white-space: nowrap;
+}
+
+.btn-ability:hover:not(:disabled) {
+  background: rgba(120, 100, 200, 0.4);
+}
+
+.btn-ability-disabled,
+.btn-ability:disabled {
+  opacity: 0.45;
+}
+
+.st-tree-unified {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.st-region-block {
+  margin-bottom: 1rem;
+  border-left: 3px solid var(--region-color, #888);
+  padding-left: 0.65rem;
+}
+
+.st-region-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--region-color, #aaa);
+  margin: 0 0 0.5rem;
+}
+
+.st-unified-node {
+  padding: 0.55rem 0.65rem;
+  margin-bottom: 0.4rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.2);
+  cursor: default;
+}
+
+.st-node-available {
+  border-color: rgba(200, 180, 80, 0.5);
+  cursor: pointer;
+}
+
+.st-node-available:hover {
+  background: rgba(200, 160, 60, 0.12);
+}
+
+.st-node-owned {
+  border-color: rgba(80, 200, 120, 0.35);
+  opacity: 0.85;
+}
+
+.st-node-locked {
+  opacity: 0.5;
+}
+
+.st-unified-node-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.st-unified-icon {
+  font-size: 1.2rem;
+}
+
+.st-unified-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.st-unified-type {
+  font-size: 0.68rem;
+  color: #8a98b0;
+}
+
+.st-unified-cost {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: #c9a84c;
+}
+
+.st-unified-desc {
+  font-size: 0.75rem;
+  color: #9aa8c0;
+  margin-top: 0.25rem;
+}
+
+.st-unified-unlocks {
+  font-size: 0.7rem;
+  color: #7ec8a0;
+  margin-top: 0.2rem;
+}
+
+.st-tab-lvl {
+  font-size: 0.65rem;
+  opacity: 0.7;
+}

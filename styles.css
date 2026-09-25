@@ -868,6 +868,48 @@ li:last-child {
   }
 }
 
+[data-chapter="thrones"] .thrones-stage {
+  margin: 1.15rem 0 1rem;
+  padding: 0.9rem;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+}
+
+[data-chapter="thrones"] .figure-label {
+  font-size: 0.75rem;
+}
+
+[data-chapter="thrones"] .thrones-frame {
+  display: flex;
+  justify-content: center;
+}
+
+[data-chapter="thrones"] .thrones-frame iframe {
+  width: 100%;
+  height: min(40rem, 78dvh);
+  min-height: 32rem;
+  border: 0;
+  background: #07080f;
+}
+
+[data-chapter="thrones"] iframe:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+[data-chapter="thrones"] .thrones-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+}
+
+@media (max-width: 520px) {
+  [data-chapter="thrones"] .thrones-frame iframe {
+    height: 78dvh;
+    min-height: 28rem;
+  }
+}
+
 @media print {
   .skip,
   .site-header,

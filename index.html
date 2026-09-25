@@ -296,23 +296,35 @@
 
         <article class="run" data-chapter="thrones" aria-labelledby="thrones-title">
           <h3 id="thrones-title">Of Thrones</h3>
-          <p class="meta">Game systems · Independent · Swift / SpriteKit / JavaScript / Three.js</p>
+          <p class="meta">Game systems · Independent · SpriteKit (2017 – 2018) and JavaScript</p>
           <dl class="gate">
             <div>
               <dt>Claim</dt>
-              <dd>Build the same state-heavy game on two platforms.</dd>
+              <dd>The browser prototype keeps battles, crafting, and the map in one local save.</dd>
             </div>
             <div>
               <dt>Evidence</dt>
-              <dd>An iOS repository, and a private browser prototype.</dd>
+              <dd>Play it on this page. It writes to local storage and does not call a server.</dd>
             </div>
             <div>
               <dt>Disposition</dt>
-              <dd><span class="stamp pass">Public iOS</span></dd>
+              <dd><span class="stamp pass">Playable</span></dd>
             </div>
           </dl>
-          <p>I used the same game concept for an earlier Swift and SpriteKit build and a browser prototype. The work covers turn-based battles, abilities, crafting, resource loops, and a Three.js world layer.</p>
-          <p><a href="https://github.com/Roflz/Of-Thrones">View the iOS repository</a></p>
+          <p>I started Of Thrones in SpriteKit in 2017. That project is the public repository. CampaignScene opens a world through portals. BattleScene places characters and runs a reach animation toward a touch. Territory draws mine, forestry, and magic-rift spots, a battle button, and a victory prize. SaveData records which territories are unlocked. GoldMine is an empty class.</p>
+          <p>The game on this page is a separate browser prototype. Choose Warrior, Ranger, Crafter, or Mage, and assign 5 stat points. Battles take turns: Attack, Skill, Auto, or Eat. Eat spends food from the save, up to 3 times in a fight. A win writes XP, gold, items, and resources into local storage. Smithing, cooking, and construction use that same save. The map is Three.js terrain only. The first fight is under Territories: Starting Field, then Slime Group. Sound is generated in the page. The browser source repository is private.</p>
+          <figure class="thrones-stage">
+            <div class="figure-label"><span>Browser prototype</span><span>Local save</span></div>
+            <div class="thrones-frame">
+              <iframe src="thrones/index.html" title="Of Thrones browser prototype" width="390" height="720" loading="lazy">The prototype needs JavaScript.</iframe>
+            </div>
+            <figcaption>The prototype boots into hero selection. After that, Territories lists Slime Group. The iOS project is not this build.</figcaption>
+          </figure>
+          <p class="thrones-links">
+            <a href="thrones/index.html">Open the prototype</a>
+            <a href="https://github.com/Roflz/Of-Thrones">View the iOS repository</a>
+          </p>
+          <p class="small-note">The SpriteKit project is the public source. This page hosts the browser prototype so it can be played without the private repository.</p>
         </article>
       </section>
 

@@ -1,0 +1,108 @@
+/* =============================================================
+   world-map.css — Three.js AoE-style isometric world map
+   ============================================================= */
+
+/* Full-screen camera viewport — no DOM scroll */
+.map-viewport {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  min-height: 0;
+  background: #04101c;
+  touch-action: none;
+}
+
+#world-map-canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  cursor: grab;
+  touch-action: none;
+}
+
+#world-map-canvas:active {
+  cursor: grabbing;
+}
+
+.world-map-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.world-map-overlay canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Portrait: suggest landscape for RTS map feel */
+.map-rotate-hint {
+  display: none;
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(4, 16, 28, 0.88);
+  border: 1px solid rgba(180, 150, 60, 0.25);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+@media (orientation: portrait) and (max-width: 900px) {
+  .map-rotate-hint { display: block; }
+}
+
+/* ── Context panel extras ────────────────────────────────────── */
+.map-context-panel .map-panel-actions {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.map-context-panel .map-panel-actions.map-panel-actions-visible {
+  display: flex;
+}
+
+.map-panel-action-btn {
+  width: 100%;
+}
+
+.wm-panel-stat {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.wm-panel-stat span:first-child {
+  color: var(--text-muted);
+}
+
+.wm-panel-desc,
+.wm-panel-sub {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-bottom: 10px;
+}
+
+.wm-panel-built {
+  padding: 10px 12px;
+  background: rgba(58, 170, 94, 0.1);
+  border: 1px solid rgba(58, 170, 94, 0.25);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+  font-size: 0.88rem;
+}
