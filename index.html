@@ -78,7 +78,7 @@
       <section id="work" aria-labelledby="work-title">
         <p class="kicker">Selected work</p>
         <h2 id="work-title">From experiment to working system</h2>
-        <p class="prose">Three projects, and the engineering behind them.</p>
+        <p class="prose">Three projects, with the problem, the engineering decision, and the evidence.</p>
 
         <article class="run" id="ivy" aria-labelledby="ivy-title">
           <h3 id="ivy-title">Ivy</h3>
@@ -97,8 +97,8 @@
               <dd><span class="stamp pass">In use</span></dd>
             </div>
           </dl>
-          <p>Evaluating coding agents means managing more than their final answers. The environment, the follow-up prompts, and the verification all affect what a comparison tells you.</p>
-          <p>I built an operator workstation to prepare and steer blinded A/B runs, collect evidence, and produce grading reports. Each model works in its own harness copy, with independent checks before the scores are frozen.</p>
+          <p>A coding-agent comparison goes wrong when harness states drift, follow-up prompts diverge, or a grader accepts a plausible answer without checking the workspace. Interactive runs still have to stay comparable, and the operator decisions that shaped them have to stay on the record.</p>
+          <p>I built an operator workstation around staged interaction plans, isolated harness copies, explicit continuation criteria, and independent verification. It records interventions and artifacts, then freezes scores before generating preference rationales. The explanation has to follow the evidence.</p>
           <figure class="workflow-figure">
             <div class="figure-label"><span>Evaluation workflow</span><span>Blinded A/B</span></div>
             <div class="workflow-start">Task + staged interaction plan</div>
@@ -111,9 +111,9 @@
             <figcaption>Method diagram of the workstation's evaluation flow.</figcaption>
           </figure>
           <div class="notebook" id="ivy-notebook">
-            <p class="kicker">The experiments</p>
-            <p class="archive-line"><span class="archive-count">162</span> completed task folders in my blind-coding archive. Staged comparisons across migrations, debugging, distributed systems, scientific code, and applications.</p>
-            <p>The archive records stage plans, continuation criteria, operator interventions, verification, and preference rationales. I check whether both models faced comparable work and whether the final artifacts support the grade.</p>
+            <p class="kicker">The archive</p>
+            <p class="archive-line"><span class="archive-count">162</span> completed task folders in my blind-coding archive. The workflow has supported staged comparisons across migrations, debugging, distributed systems, scientific code, and applications.</p>
+            <p>Each folder preserves the stage plan, continuation criteria, operator interventions, verification, and preference rationale. That audit trail makes it possible to revisit whether both models faced comparable work and whether the final artifacts actually support the grade.</p>
             <details class="process-detail">
               <summary>A verification example <span aria-hidden="true">+</span></summary>
               <div>
@@ -143,8 +143,9 @@
               <dd><span class="stamp pass">Public</span></dd>
             </div>
           </dl>
-          <p>In Boggle CNN Player, I connected screenshot capture, tile labeling, letter and bonus recognition, and a trie-based board solver. A review loop brings misclassified tiles back into labeling and training.</p>
-          <p>OSRS Learner extends this work into annotation tools, synthetic data, YOLO/CRNN workflows, and imitation-learning experiments that combine screenshots, game state, and temporal inputs.</p>
+          <p>When a visual agent makes a bad move, one end-to-end prediction does not show whether perception or decision-making failed. I needed intermediate outputs I could inspect and correct.</p>
+          <p>In Boggle CNN Player, I separated screenshot capture, board detection, tile labeling, and letter and bonus recognition from a deterministic trie-based solver. Misclassified tiles go back into a review and retraining loop. Saved grids and confusion matrices show what the learned components actually read.</p>
+          <p>The same split shows up in OSRS Learner: annotation tools, synthetic data, YOLO and CRNN workflows, and imitation-learning experiments that combine screenshots, game state, and temporal inputs.</p>
           <figure class="vision-figure">
             <div class="figure-label"><span>Boggle CNN Player</span><span>Board detection artifact</span></div>
             <div class="board-image">
@@ -182,8 +183,9 @@
               <dd><span class="stamp hold">In development</span></dd>
             </div>
           </dl>
-          <p>A companion for Old School RuneScape that brings account progress, slayer tasks, loot, and timers into a mobile interface.</p>
-          <p>I worked across the Expo/React Native app, FastAPI backend, and Java RuneLite plugin. The integration combines public player data with state the plugin can observe, using an app key to pair the clients.</p>
+          <p>Public player APIs cover only part of an Old School RuneScape account. Live slayer state, loot, timers, quests, and collection progress come from the game client, and the companion still has to behave when a service is down.</p>
+          <p>I worked across the Expo and React Native app, a FastAPI backend, and a Java RuneLite plugin. An app key pairs the clients. The plugin syncs observable state and does not inject gameplay actions. An in-memory backend store covers pairing, ingestion, state round trips, and invalid-key checks without production services.</p>
+          <p>The contract is testable across three runtimes. Only configured account state is synchronized, and special game modes are excluded. The product is still in development. The public plugin is the piece you can inspect.</p>
           <figure class="companion-figure">
             <div class="figure-label"><span>Companion app</span><span>Earlier prototype</span></div>
             <div class="phone-stage">
@@ -216,7 +218,7 @@
           <details class="project-row" data-fields="ai systems">
             <summary><span class="project-name">Dynamo</span><span class="project-description">Benchmark tasks, calibration, and rework</span><span class="project-kind">Evaluation</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>Task design and rework across ML infrastructure, compiler lowering, security, scientific computing, and systems repair. The surrounding tooling covers reviewer findings, hidden verifiers, calibration, and submission evidence.</p>
+              <p>Benchmark tasks can reward a plausible answer while missing the capability they were meant to measure. I use reviewer findings and verifier output to rework tasks across ML infrastructure, compiler lowering, security, scientific computing, and systems repair, then package reproducible submission evidence instead of grading from prose alone.</p>
               <p class="meta">Python / Docker / Harbor / Task verification</p>
               <p class="small-note">Private contract work. Contributions include task rework; underlying tasks may have other original authors.</p>
             </div>
@@ -224,7 +226,7 @@
           <details class="project-row" data-fields="ai systems">
             <summary><span class="project-name">Control Room</span><span class="project-description">Configurable coding-agent environments</span><span class="project-kind">Tooling</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>A launcher for Codex and Claude harness environments, with workspace mounting and session continuation. Built as a separate tool alongside the Ivy evaluation workstation.</p>
+              <p>Repeated agent experiments were slowed by one-off environment setup. I built a separate launcher for Codex and Claude harnesses that standardizes workspace mounting and session continuation while keeping environment control outside the Ivy grading workflow.</p>
               <p class="meta">Python / Docker / CLI</p>
               <p class="small-note">Private repository.</p>
             </div>
@@ -232,7 +234,7 @@
           <details class="project-row" data-fields="ai">
             <summary><span class="project-name">OSRS Learner</span><span class="project-description">Vision, annotation, and imitation learning</span><span class="project-kind">ML experiments</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>Tools for screenshot capture, data labeling, synthetic data, training, and verification. Imitation-learning experiments combine game-state features, image encoders, and temporal inputs, with action-level evaluation.</p>
+              <p>Visual agents are difficult to improve when collection, labeling, training, and evaluation live in separate ad hoc scripts. This project connects screenshot capture, annotation, synthetic data, YOLO/CRNN training, and action-level verification, then tests imitation-learning models with image, game-state, and temporal inputs.</p>
               <p class="meta">Python / PyTorch / YOLO / CRNN</p>
               <p><a href="#vision">See the vision case study</a></p>
             </div>
@@ -240,7 +242,7 @@
           <details class="project-row" data-fields="systems science">
             <summary><span class="project-name">Aero Software</span><span class="project-description">Video to device-ready LED patterns</span><span class="project-kind">Prototype</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>A video-processing pipeline for a spatial LED display. It normalizes frames, samples them in polar coordinates, and writes a binary lookup table for 144 LEDs across 240 angular bins. Separate inspection and preview tools help check the output.</p>
+              <p>A spatial LED display needs deterministic device data from ordinary video. I built a pipeline that normalizes frames, samples them in polar coordinates, and writes a binary lookup table for 144 LEDs across 240 angular bins; separate preview and inspection tools make the transformation checkable before it reaches the hardware.</p>
               <p class="meta">Python / OpenCV / NumPy / Binary formats</p>
               <p class="small-note">Private software prototype, alongside the Aero Graphix hardware/design work.</p>
             </div>
@@ -248,7 +250,7 @@
           <details class="project-row" data-fields="science">
             <summary><span class="project-name">Genome Analysis</span><span class="project-description">From sequence files to queryable annotations</span><span class="project-kind">Scientific software</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>A pipeline for FASTA and GenBank data, with Django/PostgreSQL storage, annotation export, and R visualization. Connects my biomolecular-engineering background with practical data software.</p>
+              <p>Raw FASTA sequences and GenBank annotations are difficult to inspect as a connected dataset. I built an ingestion path into Django/PostgreSQL, exposed queryable features in an admin UI, and added CSV export plus R visualizations for feature distributions, lengths, and gene density.</p>
               <p class="meta">Python / Biopython / Django / PostgreSQL / R</p>
               <p><a href="https://github.com/Roflz/Genome_Analysis">View repository</a></p>
             </div>
@@ -256,7 +258,7 @@
           <details class="project-row" data-fields="science systems">
             <summary><span class="project-name">Futures research pipeline</span><span class="project-description">Streaming data, validation, and session charts</span><span class="project-kind">Research tooling</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>Offline tooling for minute-level futures datasets: bounded-memory processing, trading-session boundaries, validation reports, provenance, and an interactive session viewer. Synthetic fixtures support pipeline checks.</p>
+              <p>Minute-level market research becomes unreliable when session boundaries, missing records, or provenance disappear inside preprocessing. This offline pipeline uses bounded-memory processing, explicit trading sessions, validation reports, synthetic fixtures, and an interactive viewer so each derived dataset can be traced and checked.</p>
               <p class="meta">Python / FastAPI / Data validation / Time series</p>
               <p class="small-note">Private research tooling; not a live trading system.</p>
             </div>
@@ -264,7 +266,7 @@
           <details class="project-row" data-fields="systems science">
             <summary><span class="project-name">Replicated-log safety</span><span class="project-description">State models and safety invariants in Lean</span><span class="project-kind">Formal reasoning</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>Development work on a replicated-log model, safety specifications, and proof source. Covers invariant preservation, compatible committed logs, and agreement on entries at the same index.</p>
+              <p>I used Lean to make replicated-log safety claims precise rather than leaving them as informal expectations. The model and proof source cover invariant preservation, compatibility of committed logs, and agreement when two committed entries share an index.</p>
               <p class="meta">Lean / State machines / Distributed systems</p>
               <p class="small-note">Private development project.</p>
             </div>
@@ -272,7 +274,7 @@
           <details class="project-row" data-fields="systems">
             <summary><span class="project-name">Flez Bot delivery tooling</span><span class="project-description">Windows installation and update lifecycle</span><span class="project-kind">Developer tooling</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>Installer and launcher tooling with update staging, backups, and a rollback design. Release workflows package the runtime and publish versioned artifacts and checksums.</p>
+              <p>An updater should not replace a working installation until the new bundle proves healthy. I separated installer, launcher, and updater responsibilities; staged checksummed release artifacts; and designed atomic swaps, backups, health checks, and rollback into the Windows delivery lifecycle.</p>
               <p class="meta">Python / PowerShell / GitHub Actions / Inno Setup</p>
               <p><a href="https://github.com/Roflz/flez-bot">View repository</a></p>
             </div>
@@ -280,7 +282,7 @@
           <details class="project-row" data-fields="apps">
             <summary><span class="project-name">Of Thrones</span><span class="project-description">Game systems from iOS to the browser</span><span class="project-kind">Game development</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>Work spanning an earlier Swift/SpriteKit project and a browser prototype with turn-based battles, abilities, crafting, resource systems, and a Three.js world layer.</p>
+              <p>I used the same game concept to explore state-heavy systems on two platforms: an earlier Swift/SpriteKit build and a browser prototype. The work covers turn-based battles, abilities, crafting, resource loops, and a Three.js world layer.</p>
               <p class="meta">Swift / SpriteKit / JavaScript / Three.js</p>
               <p><a href="https://github.com/Roflz/Of-Thrones">View the iOS repository</a></p>
             </div>
@@ -288,14 +290,14 @@
           <details class="project-row" data-fields="apps">
             <summary><span class="project-name">Wei &amp; Cash Kitty</span><span class="project-description">Mobile product experiments</span><span class="project-kind">Prototypes</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>Wei explores a daily-wisdom reading experience with local persistence. Cash Kitty explores game, tournament, goal, and wallet flows using demo data. Both are mobile application prototypes.</p>
+              <p>These prototypes test product flows before committing to backend infrastructure. Wei explores a daily-wisdom reading loop with local persistence; Cash Kitty uses demo data to explore game, tournament, goal, and wallet interactions in a mobile interface.</p>
               <p class="meta">React Native / Expo / TypeScript</p>
             </div>
           </details>
           <details class="project-row" data-fields="systems">
             <summary><span class="project-name">SDET Demo</span><span class="project-description">API, database, and UI test architecture</span><span class="project-kind">Demonstration</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>A C#/.NET testing scaffold with reusable fixtures, data factories, database checks, and Selenium smoke tests for an insurance-themed application.</p>
+              <p>This C#/.NET scaffold puts broad, stable coverage at the API layer, adds database assertions for persistent state, and limits Selenium to high-value smoke paths. Reusable fixtures, data factories, and configuration keep the same architecture usable locally and in CI.</p>
               <p class="meta">C# / .NET / SQL / Selenium</p>
               <p><a href="https://github.com/Roflz/sdet_demo">View repository</a></p>
             </div>
@@ -303,7 +305,7 @@
           <details class="project-row" data-fields="ai science">
             <summary><span class="project-name">ML for time series</span><span class="project-description">Prediction, recurrent policies, and backtesting</span><span class="project-kind">Experiments</span><span class="expand-mark" aria-hidden="true">+</span></summary>
             <div class="project-body">
-              <p>Stock-prediction and recurrent-PPO experiments with data preparation, model training, hyperparameter search, and evaluation. These are learning and research projects, with no claim of trading profitability.</p>
+              <p>These stock-prediction and recurrent-PPO experiments cover the research loop: data preparation, training, hyperparameter search, backtesting, and evaluation. They are learning projects, with no claim of live-trading profitability.</p>
               <p class="meta">Python / Keras / Recurrent PPO / Optuna</p>
               <p><a href="https://github.com/Roflz/crypto_trader">View recurrent-PPO work</a></p>
             </div>
