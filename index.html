@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#e7eef3" />
+  <title>Riley Mahn | AI Evaluation &amp; Software Engineering</title>
+  <meta name="description" content="Riley Mahn builds tools for evaluating AI agents, training models, and testing complex software. Selected work in evaluation, computer vision, applications, and scientific computing." />
+  <link rel="canonical" href="https://roflz.github.io/riley-mahn/" />
+  <meta property="og:title" content="Riley Mahn | AI Evaluation &amp; Software Engineering" />
+  <meta property="og:description" content="From blinded coding-agent evaluations to computer vision and complete applications. Selected engineering work by Riley Mahn." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,600;1,400&amp;family=Spectral:ital,wght@0,600;1,500&amp;family=Spline+Sans+Mono:wght@400;600&amp;display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,600;1,400&amp;family=Spectral:ital,wght@0,600;1,500&amp;family=Spline+Sans+Mono:wght@400;600&amp;display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="site.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Riley Mahn",
+    "jobTitle": "Software engineer",
+    "email": "mailto:mahnriley@gmail.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Denver", "addressRegion": "CO" },
+    "sameAs": ["https://www.linkedin.com/in/riley-mahn/", "https://github.com/Roflz"]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="mark" href="#top">riley.mahn<span>/</span>evals</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#projects">Projects</a>
+      <a href="#method">Method</a>
+      <a href="#background">Background</a>
+      <a href="Riley_Mahn_Resume_Model_Evaluations.pdf">Resume</a>
+      <a href="mailto:mahnriley@gmail.com">Email</a>
+    </nav>
+  </header>
+
+  <div id="top" class="hero">
+    <div class="hero-inner">
+      <dl class="specimen">
+        <dt>Specimen</dt>
+        <dd>Riley Mahn</dd>
+        <dt>Locale</dt>
+        <dd>Denver, CO</dd>
+        <dt>Measuring</dt>
+        <dd>Coding agents and the tools around them</dd>
+        <dt>Open to</dt>
+        <dd>Research engineering / model evaluation</dd>
+      </dl>
+      <div>
+        <p class="kicker">Field notes</p>
+        <h1>I build tools for evaluating AI agents, training models, and testing complex software.</h1>
+        <p class="lede">My work connects experimental science, software verification, and hands-on ML. Currently building evaluations and tooling for coding agents at Handshake AI.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap layout">
+    <aside class="rail" aria-label="Contact">
+      <p><strong>Email</strong> <a href="mailto:mahnriley@gmail.com">mahnriley@gmail.com</a></p>
+      <p><strong>Phone</strong> <a href="tel:+19197603117">(919) 760-3117</a></p>
+      <p><strong>LinkedIn</strong> <a href="https://www.linkedin.com/in/riley-mahn/">riley-mahn</a></p>
+      <p><strong>GitHub</strong> <a href="https://github.com/Roflz">Roflz</a></p>
+      <p><strong>Resume</strong> <a href="Riley_Mahn_Resume_Model_Evaluations.pdf">PDF</a></p>
+      <p>AI evaluation · Computer vision · Software systems · Scientific computing</p>
+      <p>Handshake eval work is described at the method level. I do not name client labs or the models behind blinded aliases.</p>
+    </aside>
+
+    <main id="main" tabindex="-1">
+      <section id="work" aria-labelledby="work-title">
+        <p class="kicker">Selected work</p>
+        <h2 id="work-title">From experiment to working system</h2>
+        <p class="prose">Three projects, and the engineering behind them.</p>
+
+        <article class="run" id="ivy" aria-labelledby="ivy-title">
+          <h3 id="ivy-title">Ivy</h3>
+          <p class="meta">Agent evaluation · Handshake AI · Python / FastAPI / Docker</p>
+          <dl class="gate">
+            <div>
+              <dt>Claim</dt>
+              <dd>Freeze scores before writing preference rationales.</dd>
+            </div>
+            <div>
+              <dt>Evidence</dt>
+              <dd>Require evidence from the running workspace, then check that the explanation agrees with the result.</dd>
+            </div>
+            <div>
+              <dt>Disposition</dt>
+              <dd><span class="stamp pass">In use</span></dd>
+            </div>
+          </dl>
+          <p>Evaluating coding agents means managing more than their final answers. The environment, the follow-up prompts, and the verification all affect what a comparison tells you.</p>
+          <p>I built an operator workstation to prepare and steer blinded A/B runs, collect evidence, and produce grading reports. Each model works in its own harness copy, with independent checks before the scores are frozen.</p>
+          <figure class="workflow-figure">
+            <div class="figure-label"><span>Evaluation workflow</span><span>Blinded A/B</span></div>
+            <div class="workflow-start">Task + staged interaction plan</div>
+            <div class="arms">
+              <div class="arm arm-a"><span class="arm-name">Model A</span><strong>Isolated harness</strong><span>Run &amp; interact</span><span>Inspect workspace</span></div>
+              <div class="arm arm-b"><span class="arm-name">Model B</span><strong>Isolated harness</strong><span>Run &amp; interact</span><span>Inspect workspace</span></div>
+            </div>
+            <div class="workflow-gate"><span class="gate-mark" aria-hidden="true">=</span><div><strong>Independent verification</strong><span>Tests, artifacts, and constraint checks</span></div></div>
+            <div class="workflow-end"><strong>Freeze scores</strong><span aria-hidden="true">&#8594;</span><strong>Write rationales</strong></div>
+            <figcaption>Method diagram of the workstation's evaluation flow.</figcaption>
+          </figure>
+          <div class="notebook" id="ivy-notebook">
+            <p class="kicker">The experiments</p>
+            <p class="archive-line"><span class="archive-count">162</span> completed task folders in my blind-coding archive. Staged comparisons across migrations, debugging, distributed systems, scientific code, and applications.</p>
+            <p>The archive records stage plans, continuation criteria, operator interventions, verification, and preference rationales. I check whether both models faced comparable work and whether the final artifacts support the grade.</p>
+            <details class="process-detail">
+              <summary>A verification example <span aria-hidden="true">+</span></summary>
+              <div>
+                <p>In a dispatch-scheduling comparison, independent checks showed that one solution was not runnable. The other produced a schedule, but still had a conflict between travel and a required meal break.</p>
+                <p>The useful distinction was between runnability and satisfying the constraints. A generated schedule alone was not enough to establish success.</p>
+                <p class="small-note">Summary of an archived verification report. Client identities, model identities, and task materials are omitted.</p>
+              </div>
+            </details>
+            <p class="small-note">Archive count from September 2026. Private evaluation work is described at the method level.</p>
+          </div>
+        </article>
+
+        <article class="run" id="vision" aria-labelledby="vision-title">
+          <h3 id="vision-title">Learning from the screen</h3>
+          <p class="meta">Computer vision &amp; ML tooling · Independent · PyTorch / OpenCV / Python</p>
+          <dl class="gate">
+            <div>
+              <dt>Claim</dt>
+              <dd>Keep learned perception and deterministic search separate.</dd>
+            </div>
+            <div>
+              <dt>Evidence</dt>
+              <dd>Inspect what the model read before debugging what the solver decided.</dd>
+            </div>
+            <div>
+              <dt>Disposition</dt>
+              <dd><span class="stamp pass">Public</span></dd>
+            </div>
+          </dl>
+          <p>In Boggle CNN Player, I connected screenshot capture, tile labeling, letter and bonus recognition, and a trie-based board solver. A review loop brings misclassified tiles back into labeling and training.</p>
+          <p>OSRS Learner extends this work into annotation tools, synthetic data, YOLO/CRNN workflows, and imitation-learning experiments that combine screenshots, game state, and temporal inputs.</p>
+          <figure class="vision-figure">
+            <div class="figure-label"><span>Boggle CNN Player</span><span>Board detection artifact</span></div>
+            <div class="board-image">
+              <a class="image-link" href="assets/boggle-board-grid.png" target="_blank" rel="noopener" aria-label="Open the Boggle board image at full size">
+                <img src="assets/boggle-board-grid.png" alt="Captured four-by-four Boggle board with an overlaid grid separating the letter and bonus tiles." width="403" height="397" loading="lazy" />
+              </a>
+            </div>
+            <p class="vision-steps"><span>Capture</span><span>Classify</span><span>Solve</span></p>
+            <figcaption>Actual board-grid output from the project repository.</figcaption>
+          </figure>
+          <details class="artifact-detail">
+            <summary>View a saved model-evaluation artifact <span aria-hidden="true">+</span></summary>
+            <figure>
+              <img src="assets/boggle-confusion.png" alt="Side-by-side confusion matrices for the project's letter and tile-bonus classifiers." width="1200" height="600" loading="lazy" />
+              <figcaption>Confusion matrices saved in the repository from a development run. This figure is not a claim of performance on new, unseen boards.</figcaption>
+            </figure>
+          </details>
+          <p><a href="https://github.com/Roflz/boggle_cnn_player">Explore Boggle's code</a></p>
+        </article>
+
+        <article class="run" id="rshub" aria-labelledby="rshub-title">
+          <h3 id="rshub-title">RSHub</h3>
+          <p class="meta">Application engineering · Independent · React Native / FastAPI / Java</p>
+          <dl class="gate">
+            <div>
+              <dt>Claim</dt>
+              <dd>Make the integration testable without the live services.</dd>
+            </div>
+            <div>
+              <dt>Evidence</dt>
+              <dd>The backend includes an in-memory test store for pairing, ingestion, state round trips, and invalid-key checks.</dd>
+            </div>
+            <div>
+              <dt>Disposition</dt>
+              <dd><span class="stamp hold">In development</span></dd>
+            </div>
+          </dl>
+          <p>A companion for Old School RuneScape that brings account progress, slayer tasks, loot, and timers into a mobile interface.</p>
+          <p>I worked across the Expo/React Native app, FastAPI backend, and Java RuneLite plugin. The integration combines public player data with state the plugin can observe, using an app key to pair the clients.</p>
+          <figure class="companion-figure">
+            <div class="figure-label"><span>Companion app</span><span>Earlier prototype</span></div>
+            <div class="phone-stage">
+              <a class="image-link" href="assets/companion-prototype.jpeg" target="_blank" rel="noopener" aria-label="Open the companion app screenshot at full size">
+                <img src="assets/companion-prototype.jpeg" alt="Earlier RuneCompanion mobile prototype showing player progress, skills, slayer tasks, clan activity, and competitions." width="375" height="667" loading="lazy" />
+              </a>
+            </div>
+            <figcaption>An earlier app screenshot, before the RSHub branding.</figcaption>
+          </figure>
+          <p><a href="https://github.com/Roflz/rshub-plugin">Explore the RuneLite plugin</a></p>
+        </article>
+      </section>
+
+      <section id="projects" aria-labelledby="projects-title">
+        <p class="kicker">Project index</p>
+        <h2 id="projects-title">A wider field of work</h2>
+        <p class="prose">Research tools, practical systems, and experiments.</p>
+        <div class="project-toolbar" hidden>
+          <fieldset class="project-filters">
+            <legend class="sr-only">Filter projects by field</legend>
+            <label><input type="radio" name="project-filter" value="all" checked /><span>All</span></label>
+            <label><input type="radio" name="project-filter" value="ai" /><span>AI &amp; ML</span></label>
+            <label><input type="radio" name="project-filter" value="systems" /><span>Systems</span></label>
+            <label><input type="radio" name="project-filter" value="science" /><span>Science &amp; data</span></label>
+            <label><input type="radio" name="project-filter" value="apps" /><span>Apps &amp; games</span></label>
+          </fieldset>
+          <p id="project-count" class="project-count" role="status" aria-live="polite"></p>
+        </div>
+        <div class="project-list">
+          <details class="project-row" data-fields="ai systems">
+            <summary><span class="project-name">Dynamo</span><span class="project-description">Benchmark tasks, calibration, and rework</span><span class="project-kind">Evaluation</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>Task design and rework across ML infrastructure, compiler lowering, security, scientific computing, and systems repair. The surrounding tooling covers reviewer findings, hidden verifiers, calibration, and submission evidence.</p>
+              <p class="meta">Python / Docker / Harbor / Task verification</p>
+              <p class="small-note">Private contract work. Contributions include task rework; underlying tasks may have other original authors.</p>
+            </div>
+          </details>
+          <details class="project-row" data-fields="ai systems">
+            <summary><span class="project-name">Control Room</span><span class="project-description">Configurable coding-agent environments</span><span class="project-kind">Tooling</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>A launcher for Codex and Claude harness environments, with workspace mounting and session continuation. Built as a separate tool alongside the Ivy evaluation workstation.</p>
+              <p class="meta">Python / Docker / CLI</p>
+              <p class="small-note">Private repository.</p>
+            </div>
+          </details>
+          <details class="project-row" data-fields="ai">
+            <summary><span class="project-name">OSRS Learner</span><span class="project-description">Vision, annotation, and imitation learning</span><span class="project-kind">ML experiments</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>Tools for screenshot capture, data labeling, synthetic data, training, and verification. Imitation-learning experiments combine game-state features, image encoders, and temporal inputs, with action-level evaluation.</p>
+              <p class="meta">Python / PyTorch / YOLO / CRNN</p>
+              <p><a href="#vision">See the vision case study</a></p>
+            </div>
+          </details>
+          <details class="project-row" data-fields="systems science">
+            <summary><span class="project-name">Aero Software</span><span class="project-description">Video to device-ready LED patterns</span><span class="project-kind">Prototype</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>A video-processing pipeline for a spatial LED display. It normalizes frames, samples them in polar coordinates, and writes a binary lookup table for 144 LEDs across 240 angular bins. Separate inspection and preview tools help check the output.</p>
+              <p class="meta">Python / OpenCV / NumPy / Binary formats</p>
+              <p class="small-note">Private software prototype, alongside the Aero Graphix hardware/design work.</p>
+            </div>
+          </details>
+          <details class="project-row" data-fields="science">
+            <summary><span class="project-name">Genome Analysis</span><span class="project-description">From sequence files to queryable annotations</span><span class="project-kind">Scientific software</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>A pipeline for FASTA and GenBank data, with Django/PostgreSQL storage, annotation export, and R visualization. Connects my biomolecular-engineering background with practical data software.</p>
+              <p class="meta">Python / Biopython / Django / PostgreSQL / R</p>
+              <p><a href="https://github.com/Roflz/Genome_Analysis">View repository</a></p>
+            </div>
+          </details>
+          <details class="project-row" data-fields="science systems">
+            <summary><span class="project-name">Futures research pipeline</span><span class="project-description">Streaming data, validation, and session charts</span><span class="project-kind">Research tooling</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>Offline tooling for minute-level futures datasets: bounded-memory processing, trading-session boundaries, validation reports, provenance, and an interactive session viewer. Synthetic fixtures support pipeline checks.</p>
+              <p class="meta">Python / FastAPI / Data validation / Time series</p>
+              <p class="small-note">Private research tooling; not a live trading system.</p>
+            </div>
+          </details>
+          <details class="project-row" data-fields="systems science">
+            <summary><span class="project-name">Replicated-log safety</span><span class="project-description">State models and safety invariants in Lean</span><span class="project-kind">Formal reasoning</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>Development work on a replicated-log model, safety specifications, and proof source. Covers invariant preservation, compatible committed logs, and agreement on entries at the same index.</p>
+              <p class="meta">Lean / State machines / Distributed systems</p>
+              <p class="small-note">Private development project.</p>
+            </div>
+          </details>
+          <details class="project-row" data-fields="systems">
+            <summary><span class="project-name">Flez Bot delivery tooling</span><span class="project-description">Windows installation and update lifecycle</span><span class="project-kind">Developer tooling</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>Installer and launcher tooling with update staging, backups, and a rollback design. Release workflows package the runtime and publish versioned artifacts and checksums.</p>
+              <p class="meta">Python / PowerShell / GitHub Actions / Inno Setup</p>
+              <p><a href="https://github.com/Roflz/flez-bot">View repository</a></p>
+            </div>
+          </details>
+          <details class="project-row" data-fields="apps">
+            <summary><span class="project-name">Of Thrones</span><span class="project-description">Game systems from iOS to the browser</span><span class="project-kind">Game development</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>Work spanning an earlier Swift/SpriteKit project and a browser prototype with turn-based battles, abilities, crafting, resource systems, and a Three.js world layer.</p>
+              <p class="meta">Swift / SpriteKit / JavaScript / Three.js</p>
+              <p><a href="https://github.com/Roflz/Of-Thrones">View the iOS repository</a></p>
+            </div>
+          </details>
+          <details class="project-row" data-fields="apps">
+            <summary><span class="project-name">Wei &amp; Cash Kitty</span><span class="project-description">Mobile product experiments</span><span class="project-kind">Prototypes</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>Wei explores a daily-wisdom reading experience with local persistence. Cash Kitty explores game, tournament, goal, and wallet flows using demo data. Both are mobile application prototypes.</p>
+              <p class="meta">React Native / Expo / TypeScript</p>
+            </div>
+          </details>
+          <details class="project-row" data-fields="systems">
+            <summary><span class="project-name">SDET Demo</span><span class="project-description">API, database, and UI test architecture</span><span class="project-kind">Demonstration</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>A C#/.NET testing scaffold with reusable fixtures, data factories, database checks, and Selenium smoke tests for an insurance-themed application.</p>
+              <p class="meta">C# / .NET / SQL / Selenium</p>
+              <p><a href="https://github.com/Roflz/sdet_demo">View repository</a></p>
+            </div>
+          </details>
+          <details class="project-row" data-fields="ai science">
+            <summary><span class="project-name">ML for time series</span><span class="project-description">Prediction, recurrent policies, and backtesting</span><span class="project-kind">Experiments</span><span class="expand-mark" aria-hidden="true">+</span></summary>
+            <div class="project-body">
+              <p>Stock-prediction and recurrent-PPO experiments with data preparation, model training, hyperparameter search, and evaluation. These are learning and research projects, with no claim of trading profitability.</p>
+              <p class="meta">Python / Keras / Recurrent PPO / Optuna</p>
+              <p><a href="https://github.com/Roflz/crypto_trader">View recurrent-PPO work</a></p>
+            </div>
+          </details>
+        </div>
+        <p class="index-footer">More work in browser automation, web tooling, and game integrations on <a href="https://github.com/Roflz">GitHub</a>.</p>
+      </section>
+
+      <section id="method" class="method" aria-labelledby="method-title">
+        <p class="kicker">Protocol</p>
+        <h2 id="method-title">Make the result inspectable</h2>
+        <ol>
+          <li>Define what success means. Turn an open-ended goal into checks another person can apply.</li>
+          <li>Build the tools to observe it. Keep the inputs, interventions, and outputs available for inspection.</li>
+          <li>Investigate the failures. Separate model behavior, data problems, and infrastructure faults before drawing a conclusion.</li>
+        </ol>
+      </section>
+
+      <section id="background" aria-labelledby="background-title">
+        <p class="kicker">Lineage</p>
+        <h2 id="background-title">An experimental foundation</h2>
+        <p class="prose">Scientific instruments, flight-control software, surgical navigation, and AI agents.</p>
+        <article class="run">
+          <h3>Handshake AI</h3>
+          <p class="meta">2026 – present · Contract evaluation fellow</p>
+          <p>Coding-agent evaluations, benchmark task work, rubrics, and operator tooling. Connecting model behavior to reproducible evidence across live runs and repository-based tasks.</p>
+        </article>
+        <article class="run">
+          <h3>Medtronic</h3>
+          <p class="meta">Feb – May 2026 · Software / System Tester · Contract via Brooksource</p>
+          <p>Quality testing for surgical-navigation and robotic systems, including Stealth AXiS, StealthStation S8, and Mazor, in a software/system testing role.</p>
+        </article>
+        <article class="run">
+          <h3>Boeing</h3>
+          <p class="meta">2022 – 2024 · Software verification / DevOps engineer</p>
+          <p>Verified embedded actuator-control software with C#, SpecFlow, Gherkin, and Python. Built CI/CD workflows and analysis tools, automated project migrations, and served as test conductor for Test Readiness Reviews and Formal Qualification Testing.</p>
+        </article>
+        <article class="run">
+          <h3>Agilent Technologies</h3>
+          <p class="meta">2019 – 2022 · QA test automation</p>
+          <p>Built an automation platform for chromatography and mass-spectrometry software, integrated Jenkins, and helped lead the team's delivery as Scrum Master. Worked across data acquisition, processing, and verification.</p>
+        </article>
+        <article class="run">
+          <h3>i-Cultiver &amp; Mendel Biological Solutions</h3>
+          <p class="meta">2018 – 2019 · Analytical chemistry / Molecular biology</p>
+          <p>Designed and ran experiments, analyzed 500+ samples at i-Cultiver, and worked with molecular assays and automated liquid handling at Mendel. Turned experimental results into reports and decisions.</p>
+        </article>
+        <article class="run">
+          <h3>University of California, Santa Cruz</h3>
+          <p class="meta">B.S. · 2017 · Biomolecular engineering</p>
+          <p>Minors in bioinformatics and applied mathematics. Research in the Partch and Bowman labs, and metabolic-engineering work with the 2016 iGEM team.</p>
+        </article>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-title">
+        <p class="kicker">Next</p>
+        <h2 id="contact-title">Contact</h2>
+        <p>I'm interested in research engineering and model evaluation roles. Happy to talk through the systems, experiments, and decisions behind this work.</p>
+        <p class="contact-row">
+          <a href="mailto:mahnriley@gmail.com">mahnriley@gmail.com</a>
+          <a href="Riley_Mahn_Resume_Model_Evaluations.pdf">Resume (PDF)</a>
+          <a href="https://www.linkedin.com/in/riley-mahn/">LinkedIn</a>
+          <a href="https://github.com/Roflz">GitHub</a>
+          <a href="tel:+19197603117">(919) 760-3117</a>
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Riley Mahn · Denver, Colorado</span>
+      <a href="#top">Back to top</a>
+    </div>
+  </footer>
+</body>
+</html>
