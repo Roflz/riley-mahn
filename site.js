@@ -1,23 +1,16 @@
-const projectRows = Array.from(document.querySelectorAll(".project-row"));
-const filterToolbar = document.querySelector(".project-toolbar");
-const projectCount = document.querySelector("#project-count");
+const chapters = Array.from(document.querySelectorAll("[data-chapter]"));
+const chapterToolbar = document.querySelector(".chapter-toolbar");
 
-function filterProjects(field) {
-  let visibleCount = 0;
-  for (const row of projectRows) {
-    const visible = field === "all" || row.dataset.fields.split(" ").includes(field);
-    row.hidden = !visible;
-    if (!visible) row.open = false;
-    if (visible) visibleCount += 1;
-  }
-  projectCount.textContent = `${visibleCount} ${visibleCount === 1 ? "project" : "projects"}`;
+function showChapter(id) {
+  for (const chapter of chapters) chapter.hidden = chapter.dataset.chapter !== id;
 }
 
-if (filterToolbar && projectCount) {
-  filterToolbar.hidden = false;
-  filterProjects(document.querySelector('input[name="project-filter"]:checked').value);
-  filterToolbar.addEventListener("change", (event) => {
-    if (event.target.matches('input[name="project-filter"]')) filterProjects(event.target.value);
+if (chapterToolbar && chapters.length) {
+  chapterToolbar.hidden = false;
+  const selected = chapterToolbar.querySelector('input[name="chapter"]:checked');
+  showChapter(selected ? selected.value : chapters[0].dataset.chapter);
+  chapterToolbar.addEventListener("change", (event) => {
+    if (event.target.matches('input[name="chapter"]')) showChapter(event.target.value);
   });
 }
 

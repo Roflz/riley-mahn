@@ -21,29 +21,24 @@ def main() -> None:
         expect(page.locator("h1")).to_have_text(
             "I build tools for evaluating AI agents, training models, and testing complex software."
         )
-        expect(page.locator("#project-count")).to_have_text("12 projects")
         page.keyboard.press("Tab")
         expect(page.locator("a.skip")).to_be_focused()
         page.keyboard.press("Enter")
         expect(page.locator("main")).to_be_focused()
 
-        for field, count in [("ai", 4), ("systems", 7), ("science", 5), ("apps", 2), ("all", 12)]:
-            page.locator(f'label:has(input[value="{field}"])').click()
-            expect(page.locator(".project-row:visible")).to_have_count(count)
-            expect(page.locator("#project-count")).to_have_text(f"{count} projects")
+        for chapter in ["ivy", "osrs", "rshub", "aero", "genome", "flez", "futures", "thrones"]:
+            page.locator(f'label:has(input[name="chapter"][value="{chapter}"])').click()
+            expect(page.locator(f'[data-chapter="{chapter}"]')).to_be_visible()
+            expect(page.locator("[data-chapter]:visible")).to_have_count(1)
 
-        # Exercise keyboard disclosure and verify that filtering closes hidden items.
-        first_summary = page.locator(".project-row summary").first
-        first_summary.focus()
-        page.keyboard.press("Enter")
-        expect(page.locator(".project-row").first).to_have_attribute("open", "")
-        page.locator('label:has(input[value="apps"])').click()
-        assert page.locator(".project-row").first.get_attribute("open") is None
-        page.locator('label:has(input[value="all"])').click()
+        page.locator('label:has(input[name="chapter"][value="osrs"])').click()
         page.locator(".artifact-detail summary").click()
         page.locator('img[src$="boggle-confusion.png"]').scroll_into_view_if_needed()
-        page.wait_for_function("Array.from(document.images).every(i => i.complete && i.naturalWidth > 0)")
+        page.wait_for_function(
+            "Array.from(document.images).filter(i => i.offsetParent !== null).every(i => i.complete && i.naturalWidth > 0)"
+        )
         page.locator(".artifact-detail summary").click()
+        page.locator('label:has(input[name="chapter"][value="ivy"])').click()
         page.locator(".process-detail summary").click()
         expect(page.locator(".process-detail div")).to_be_visible()
         page.locator(".process-detail summary").click()
@@ -66,19 +61,24 @@ def main() -> None:
             if name in {"desktop", "mobile"}:
                 page.screenshot(path=str(OUT / f"{name}-full.png"), full_page=True)
             if name == "desktop":
-                for section in ["ivy", "vision", "rshub", "projects"]:
-                    page.locator(f'.nav a[href="#{section}"]').click() if section == "projects" else page.evaluate("id => document.getElementById(id).scrollIntoView()", section)
+                for section in ["ivy", "osrs", "rshub", "method"]:
+                    if section == "method":
+                        page.locator('.nav a[href="#method"]').click()
+                    else:
+                        page.locator(f'label:has(input[name="chapter"][value="{section}"])').click()
+                        page.locator(f'[data-chapter="{section}"]').scroll_into_view_if_needed()
                     page.screenshot(path=str(OUT / f"desktop-{section}.png"))
-                expect(page.locator('.nav a[href="#projects"]')).to_have_attribute("aria-current", "location")
+                expect(page.locator('.nav a[href="#method"]')).to_have_attribute("aria-current", "location")
         assert not errors, errors
 
         fallback = browser.new_page(java_script_enabled=False)
         fallback.goto(URL)
-        expect(fallback.locator(".project-row")).to_have_count(12)
-        expect(fallback.locator(".project-toolbar")).to_be_hidden()
-        fallback.locator(".project-row summary").first.click()
-        expect(fallback.locator(".project-body").first).to_be_visible()
-        print("PASS: responsive layouts, project filters, keyboard controls, disclosures, images, links, resume, and no-JS fallback")
+        expect(fallback.locator("[data-chapter]")).to_have_count(8)
+        expect(fallback.locator("[data-chapter]:visible")).to_have_count(8)
+        expect(fallback.locator(".chapter-toolbar")).to_be_hidden()
+        fallback.locator(".process-detail summary").click()
+        expect(fallback.locator(".process-detail div")).to_be_visible()
+        print("PASS: responsive layouts, chapter switcher, keyboard controls, disclosures, images, links, resume, and no-JS fallback")
         print("Preview:", URL)
         browser.close()
 
